@@ -24,6 +24,14 @@ void swap(int i, int j, char *filename) {
         puts("Error! File wasn't open(swaping).");
 }
 
+void printFile(char *filename) {
+    FILE *file = fopen(filename, "rb");
+    for (int input; fread(&input, sizeof(int), 1, file) != 0;)
+        printf("%d ", input);
+    puts("");
+    fclose(file);
+}
+
 int fillFileWithDigits(const char *filename) {
     FILE *outputFile = fopen(filename, "wb");
     if (outputFile != NULL) {
@@ -31,7 +39,7 @@ int fillFileWithDigits(const char *filename) {
         puts("Enter digits:"), fflush(stdin);
         do {
             bool isNegative = false;
-            int result = 0;
+            int result = '\0';
             inputChar = '$';
 
             while (inputChar != ' ' && inputChar != 13) {
@@ -43,9 +51,10 @@ int fillFileWithDigits(const char *filename) {
                 if (inputChar == ' ' || inputChar >= '0' && inputChar <= '9')
                     printf("%c", inputChar);
             }
-
-            result = isNegative ? -result : result;
-            countOfDigits += fwrite(&result, sizeof(int), 1, outputFile);
+            if (result != '\0') {
+                result = isNegative ? -result : result;
+                countOfDigits += fwrite(&result, sizeof(int), 1, outputFile);
+            }
         } while (inputChar != 13);
         puts(""), fclose(outputFile);
         return countOfDigits;
@@ -75,6 +84,8 @@ void fileSort(FileInfo info) {
             sortingFile = fopen(info.filename, "rb");
         }
         fclose(sortingFile);
+        puts("Sorted file:");
+        printFile(info.filename);
     } else
         puts("Error! File wasn't open(sorting).");
 }
