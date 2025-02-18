@@ -1,7 +1,7 @@
 #include "functions.h"
 #include "tasks.h"
 
-int main() {
+int main(int argc, char **argv) {
     char choice = ' ';
     do {
         system("cls");
@@ -10,8 +10,8 @@ int main() {
         printf("%c\n", choice);
 
         switch(choice) {
-            case '1': task1(); break;
-            case '2': task2(); break;
+            case '1': task1(argc, argv); break;
+            case '2': task2(argc, argv); break;
             case '3': return 0;
         }
 

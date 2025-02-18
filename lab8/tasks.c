@@ -1,9 +1,14 @@
+#include <string.h>
 #include "tasks.h"
 
-void task1() {
+void task1(int argc, char **argv) {
     char filename[20];
-    inputFilename(filename);
+    if (argc <= 1)
+        inputFilename(filename);
+    else
+        strcpy(filename, argv[1]);
     fillFileWithDigits(filename);
+
     FILE *inputFile = fopen(filename, "rb");
 
     if (inputFile != NULL) {
@@ -20,9 +25,13 @@ void task1() {
         puts("Error! File wasn't open");
 }
 
-void task2() {
+void task2(int argc, char **argv) {
     FileInfo info1, info2, infoBoth;
-    inputFilename(info1.filename), inputFilename(info2.filename);
+    if (argc <= 3)
+        inputFilename(info1.filename), inputFilename(info2.filename);
+    else
+        strcpy(info1.filename, argv[1]), strcpy(info2.filename, argv[2]), strcpy(infoBoth.filename, argv[3]); 
+        
     info1.filesize = fillFileWithDigits(info1.filename), info2.filesize = fillFileWithDigits(info2.filename);
 
     fileSort(info1), fileSort(info2);
@@ -54,6 +63,7 @@ void task2() {
             printf("%d ", input);
         }
         puts("");
+        fclose(file1), fclose(file2), fclose(fileBoth);
     } else 
         puts("Error! File wasn't open.");
 }

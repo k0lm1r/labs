@@ -3,7 +3,7 @@
 
 #include "functions.h"
 
-void task1();
-void task2();
+void task1(int, char**);
+void task2(int, char**);
 
 #endif
