@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void task(char* filename) {
+void task(char *filename) {
     int length, pos = 0;
     fillFile(filename);
     printFile(filename);
@@ -9,13 +9,14 @@ void task(char* filename) {
     scanf("%d", &length);
     puts("Words that have entered length.");
 
-    char *word = readWord(filename, pos);
+    char *word = readWord(filename, 0);
     while (word != NULL) {
         int wordLength = stringLength(word);
         if (wordLength == length)
             printf("%s ", word);
         else if (wordLength > length)
             reverseWord(filename, pos, wordLength);
+            
         pos += wordLength + 1;
         word = readWord(filename, pos);
     }

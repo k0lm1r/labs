@@ -16,7 +16,51 @@ void reverseWord(char* filename, int pos, int length) {
     fclose(file);
 }
 
-int tryInt() {
+void fillFile(char *filename) {
+    FILE *file = fopen(filename, "w");
+    puts("Enter words.");
+    char ch = getchar();
+    while (ch != '\n') {
+        fprintf(file, "%c", ch);
+        ch = getchar();
+    }
+    fclose(file);
+}
+
+int stringLength(char* str) {
+    char *s;
+    for (s = str; *s; s++);
+    return s - str;
+}
+
+char* readWord(char* filename, int pos) {
+    char* word = NULL, ch = '\0';
+    int i = 0;
+    FILE *file = fopen(filename, "r");
+    fseek(file, pos, SEEK_SET);
+
+    while (fread(&ch, sizeof(char), 1, file) != 0 && ch != ' ') {
+        word = (char*)realloc(word, (i + 2) * sizeof(char));
+        word[i++] = ch;
+    }
+
+    if (word != NULL) word[i] = '\0';
+    fclose(file);
+
+    return word;
+}
+
+void printFile(char *filename) {
+    int pos = 0;
+    char *word = readWord(filename, 0);
+    while (word != NULL) {
+        pos += stringLength(word) + 1;
+        printf("%s ", word);
+        word = readWord(filename, pos);
+    }
+    puts("");
+}
+/*int tryInt() {
     int result, inputChar;
     do {
         bool isNegative = false;
@@ -37,54 +81,4 @@ int tryInt() {
         }
     } while (inputChar != 13 || result == '\0');
     puts("");
-}
-
-void printFile(char *filename) {
-    FILE *file = fopen(filename, "r");
-    puts("File:");
-    for (char input; fscanf(file, "%c", &input) != EOF;)
-        printf("%c", input);
-    puts("");
-    fclose(file);
-}
-
-void fillFile(char *filename) {
-    FILE *file = fopen(filename, "w");
-    puts("Enter words.");
-    char ch = getchar();
-    while (ch != '\n') {
-        fprintf(file, "%c", ch);
-        ch = getchar();
-    }
-    fclose(file);
-}
-
-int stringLength(char* str) {
-    char *s;
-    for (s = str; *s; s++);
-    return s - str;
-}
-
-char* readWord(char* filename, int pos) {
-    char* word = (char*)malloc(sizeof(char));
-    FILE *file = fopen(filename, "r");
-    fseek(file, pos, SEEK_SET);
-    char ch;
-    if (fscanf(file, "%c", &ch) != EOF) {
-        int i = 0;
-        do {
-            if (ch != ' ') {
-                word[i] = ch;
-                word = (char*)realloc(word, sizeof(char) * (++i + 1));
-            } else {
-                word[i] = '\0';
-                break;
-            }
-        } while (fscanf(file, "%c", &ch) != EOF);
-        fclose(file);
-        return word;
-    } else {
-        fclose(file);
-        return NULL;
-    }
-}
+} */

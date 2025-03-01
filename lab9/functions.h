@@ -8,9 +8,9 @@
 
 void printFile(char*);
 void fillFile(char*);
-int stringLength(char*);
 char getAnswer();
 void reverseWord(char*, int, int);
+int stringLength(char*);
 char* readWord(char*, int);
 
 #endif
