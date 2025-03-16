@@ -5,5 +5,5 @@
 #include <string.h>
 #include "footballTeam.h"
 
-void olderByteFinding();
-void teamsEditor(footballTeam*);
+int tryInt(bool);
+char* fillingString();
