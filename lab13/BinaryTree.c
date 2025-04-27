@@ -14,7 +14,7 @@ void addElement(binaryTree **root, binaryTree *element) {
                 else {
                     lastNode->right = element; return;
                 }
-            }
+            } else if (element->data == lastNode->data) { free(element); return; }
         }
         *root = element;
     }
@@ -42,12 +42,13 @@ void printTree(binaryTree *root) {
 }
 
 void deleteElement(binaryTree **root, int data) {
-    if (!*root || !(*root)->left && !(*root)->right) {
-        puts("Element was not found");
+    if (!*root || !(*root)->left && !(*root)->right && (*root)->data != data) {
+        puts("Element was not found.\nPress any key to return..."), _getch();
     } else {
-        if ((*root)->left && (*root)->left->data == data || (*root)->right && (*root)->right->data == data) {
+        if ((*root)->data == data || (*root)->left && (*root)->left->data == data || (*root)->right && (*root)->right->data == data) {
             binaryTree *deletedNode;
-            if ((*root)->left && (*root)->left->data == data) {
+            if ((*root)->data == data) deletedNode = *root, *root = NULL;
+            else if ((*root)->left && (*root)->left->data == data) {
                 deletedNode = (*root)->left;
                 (*root)->left = NULL;
             } else {
