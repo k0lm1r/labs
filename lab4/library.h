@@ -1,6 +1,8 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
 
+#include <stdbool.h>
+
 char Try_answer();
 int Try_int(bool IsLen);
 double Try_double();
