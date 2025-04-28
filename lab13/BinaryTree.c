@@ -68,10 +68,12 @@ int findLastPositive(binaryTree *node, int currentLevel, int lastPositiveLevel) 
 }
 
 void treeVisualisation(binaryTree* root, int pos) {
-    if (root == NULL) return;
-    treeVisualisation(root->right, pos + 3);
-    printf("\n");
-    for (int i = 0; i < pos; i++) printf(" ");
-    printf("%d\n", root->data);
-    treeVisualisation(root->left, pos + 3);
+    if (root) {
+        treeVisualisation(root->right, pos + 3);
+        puts("");
+        for (int i = 0; i < pos; i++)
+            printf(" ");
+        printf("%d\n", root->data);
+        treeVisualisation(root->left, pos + 3);
+    }
 }
