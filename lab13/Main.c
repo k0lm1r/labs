@@ -22,7 +22,7 @@ int main() {
                 break;
             case '3':
                 system("cls");
-                printTree(item);
+                treeVisualisation(item, 0);
                 puts("\nPress any key to return..."), _getch();
         }
     } while (choice != '4');

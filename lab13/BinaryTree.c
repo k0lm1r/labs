@@ -33,14 +33,6 @@ void createTree(binaryTree **root) {
     }
 }
 
-void printTree(binaryTree *root) {
-    if (root) {
-        printTree(root->left);
-        printf("%d ", root->data);
-        printTree(root->right);
-    }
-}
-
 void deleteElement(binaryTree **root, int data) {
     if (!*root || !(*root)->left && !(*root)->right && (*root)->data != data) {
         puts("Element was not found.\nPress any key to return..."), _getch();
@@ -73,4 +65,13 @@ int findLastPositive(binaryTree *node, int currentLevel, int lastPositiveLevel) 
         int rightDeepest = findLastPositive(node->right, nextLevel, last);
         return leftDeepest > rightDeepest ? leftDeepest : rightDeepest;
     } else return lastPositiveLevel;
+}
+
+void treeVisualisation(binaryTree* root, int pos) {
+    if (root == NULL) return;
+    treeVisualisation(root->right, pos + 3);
+    printf("\n");
+    for (int i = 0; i < pos; i++) printf(" ");
+    printf("%d\n", root->data);
+    treeVisualisation(root->left, pos + 3);
 }
