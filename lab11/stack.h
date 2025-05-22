@@ -3,21 +3,21 @@
 typedef struct stack {
     int data;
     struct stack* prev;
-} stack;
+} Stack;
 
-typedef struct stackDouble {
+typedef struct stackD {
     double data;
-    struct stackDouble *prev;
+    struct stackD *prev;
 } stackDouble;
 
-typedef struct stackChar {
+typedef struct stackCh {
     char data;
-    struct stackChar *prev;
+    struct stackCh *prev;
 } stackChar;
 
-void push(stack** lastElem, int newData);
-int pop(stack** lastElem);
-int fillStack(stack** stc, int term);
+void push(Stack** lastElem, int newData);
+int pop(Stack** lastElem);
+int fillStack(Stack** stc, int term);
 void pushDouble(stackDouble **lastElem, double newData);
 double popDouble(stackDouble **lastElem);
 void pushChar(stackChar **lastElem, char newData);

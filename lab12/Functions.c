@@ -9,6 +9,7 @@ int tryInt(bool isPositive) {
             result = result * 10 + inputChar - '0';
         else if (inputChar == '-' && !isPositive && !isNegative && result == '\0') 
             isNegative = true, printf("%c", inputChar);
+        else if (inputChar == 8) result /= 10, printf("\b \b");
         if (inputChar >= '0' && inputChar <= '9' || inputChar == ' ') {
             printf("%c", inputChar);
         }

@@ -1,13 +1,13 @@
 #include "stack.h"
 
-void push(stack **lastElem,  int newData) {
-    stack *temp = *lastElem;
-    *lastElem = (stack*)malloc(sizeof(stack));
+void push(Stack **lastElem,  int newData) {
+    Stack *temp = *lastElem;
+    *lastElem = (Stack*)malloc(sizeof(Stack));
     (*lastElem)->data = newData;
     (*lastElem)->prev = temp;
 }
 
-int pop(stack **lastElem) {
+int pop(Stack **lastElem) {
     if (*lastElem != NULL) {
         int data = (*lastElem)->data;
         (*lastElem) = (*lastElem)->prev;
@@ -16,7 +16,7 @@ int pop(stack **lastElem) {
     return INT_MIN;
 }
 
-int fillStack(stack** stc,  int term) {
+int fillStack(Stack** stc,  int term) {
     puts("Enter stack length:");
     int n = tryInt(true);
 
