@@ -8,3 +8,4 @@
 int tryInt(bool isPositive);
 bool contains(char* string, char symbol);
 int getDigit(double *digit, char *filename, int position);
+char* findChar(char *str, char ch);

@@ -16,6 +16,7 @@ int main() {
                 puts("Enter filename:");
                 char filename[20];
                 fgets(filename, 20, stdin);
+                *findChar(filename, '\n') = '\0';
                 calculateFile(filename); 
                 break;
         }

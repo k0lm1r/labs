@@ -33,6 +33,11 @@ bool errorsCatch(char *filename) {
     int bracketsBalance = 0, firstBracketPos = 0;
 
     fscanf(file, "%c", &previosChar);
+    if (previosChar == '(') bracketsBalance++;
+    else if (previosChar == ')') {
+        printf("The opening bracket is missed on %d position.\n", ftell(file) - 1);
+        return false;
+    }
     while (fscanf(file, "%c", &inputChar) != EOF) {
         if (!contains(approvedChars, inputChar) && !(inputChar >= '0' && inputChar <= '9')) {
             printf("Wrong char in %d position.\n", ftell(file) - 1);
@@ -107,7 +112,10 @@ void calculateFile(char *filename) {
             fprintf(output, "%lf\n", popDouble(&numbers));
         }
         fclose(file);
+        fclose(output);
         free(numbers);
         free(operations);
+        puts("Results were written in output.txt file.");
     }
+    _getch();
 }

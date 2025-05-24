@@ -42,3 +42,8 @@ int getDigit(double *digit, char *filename, int position) {
     fclose(file);
     return pos;
 }
+
+char* findChar(char* str, char ch) {
+    for (; *str; str++) if (*str == ch) return str;
+    return NULL;
+}
