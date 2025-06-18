@@ -18,6 +18,15 @@ int tryInt(bool isPositive) {
     return isNegative ? -result : result;
 }
 
+void* safeMalloc(size_t size) {
+    void *newPointer = malloc(size);
+    if (newPointer) return newPointer;
+    else {
+        perror("Malloc error");
+        exit(0xAB6566);
+    }
+}
+
 bool contains(char* string, char symbol) {
     for (char *s = string; *s; ++s)
         if (*s == symbol) return true;

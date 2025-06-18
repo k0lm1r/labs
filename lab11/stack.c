@@ -1,19 +1,20 @@
 #include "stack.h"
 
-void push(Stack **lastElem,  int newData) {
-    Stack *temp = *lastElem;
-    *lastElem = (Stack*)malloc(sizeof(Stack));
-    (*lastElem)->data = newData;
-    (*lastElem)->prev = temp;
+Stack* push(Stack *last, void *data) {
+    Stack *newNode = (Stack*)safeMalloc(sizeof(Stack));
+    newNode->data = data;
+    newNode->next = last;
+    return newNode;
 }
 
-int pop(Stack **lastElem) {
-    if (*lastElem != NULL) {
-        int data = (*lastElem)->data;
-        (*lastElem) = (*lastElem)->prev;
+void* pop(Stack **last) {
+    if (*last) {
+        void *data = (*last)->data;
+        Stack *newLast = (*last)->next;
+        free(*last);
+        *last = newLast;
         return data;
-    }
-    return INT_MIN;
+    } else return NULL;
 }
 
 int fillStack(Stack** stc,  int term) {
@@ -22,43 +23,12 @@ int fillStack(Stack** stc,  int term) {
 
     puts("Enter stack elements:");
     for (int i = 0; i < n; ++i) {
-        int element = tryInt(false);
-        if ((*stc) == NULL || term == 0 || term < 0 && element >= (*stc)->data || term > 0 && element <= (*stc)->data)
-            push(stc, element);
+        int *element = (int*)safeMalloc(sizeof(int));
+        *element = tryInt(false);
+        if ((*stc) == NULL || term == 0 || term < 0 && *element >= *(int*)(*stc)->data || term > 0 && *element <= *(int*)(*stc)->data)
+            *stc = push(*stc, element);
         else
             puts("Enter valid element!"), i--;
     }
     return n;
-}
-
-void pushDouble(stackDouble **lastElem, double newData) {
-    stackDouble *temp = *lastElem;
-    *lastElem = (stackDouble*)malloc(sizeof(stackDouble));
-    (*lastElem)->data = newData;
-    (*lastElem)->prev = temp;
-}
-
-double popDouble(stackDouble **lastElem) {
-    if (*lastElem != NULL) {
-        double data = (*lastElem)->data;
-        *lastElem = (*lastElem)->prev;
-        return data;
-    }
-    return INT_MIN;
-}
-
-void pushChar(stackChar **lastElem, char newData) {
-    stackChar *temp = *lastElem;
-    *lastElem = (stackChar*)malloc(sizeof(stackChar));
-    (*lastElem)->data = newData;
-    (*lastElem)->prev = temp;
-}
-
-char popChar(stackChar **lastElem) {
-    if (*lastElem != NULL) {
-        char data = (*lastElem)->data;
-        (*lastElem) = (*lastElem)->prev;
-        return data;
-    }
-    return '\0';
 }
