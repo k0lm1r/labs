@@ -30,41 +30,38 @@ void calculate(Stack **numbers, Stack **operations) {
 bool errorsCatch(char *filename) {
     FILE *file = fopen(filename, "r");
     if (file) {
-        char inputChar, previosChar;
-        char approvedChars[] = {'+', '-', '*', '/', '(', ')', '.', '\n', '\0'};
-        int bracketsBalance = 0;
+        char inputChar, previosChar = '\n';
+        char approvedChars[] = {'+', '-', '*', '/', '(', ')', '.', '\0'};
+        int bracketsBalance = 0, lineNumber = 1, charPos = 1;
 
-        fscanf(file, "%c", &previosChar);
-        if (previosChar == '(')
-            bracketsBalance++;
-        else if (previosChar == ')') {
-            printf("The opening bracket is missed on %ld position.\n", ftell(file) - 1);
-            return false;
-        }
         while (fscanf(file, "%c", &inputChar) != EOF) {
-            if (!contains(approvedChars, inputChar) && !(inputChar >= '0' && inputChar <= '9')) {
-                printf("Wrong char in %ld position.\n", ftell(file) - 1);
+            if (inputChar == '\n') {
+                lineNumber++;
+                charPos = 0;
+            } else if (!contains(approvedChars, inputChar) && !(inputChar >= '0' && inputChar <= '9')) {
+                printf("Wrong char in %d line %d position.\n", lineNumber, charPos);
                 return false;
             } else if (contains(approvedChars, inputChar) && contains(approvedChars, previosChar) && previosChar != ')' && inputChar != '(' && !(previosChar == '(' && inputChar == '-')) {
-                printf("Digit was missed on %ld position.\n", ftell(file) - 1);
+                printf("Digit was missed in %d line %d position.\n", lineNumber, charPos);
                 printf("%c %c", previosChar, inputChar);
                 return false;
             } else if (previosChar == ')' && inputChar == '(') {
-                printf("There must be an operation sign between the brackets on %ld position.\n", ftell(file) - 1);
+                printf("There must be an operation sign between the brackets in %d line %d position.\n", lineNumber, charPos);
                 return false;
             } else if (inputChar == '(') {
                 bracketsBalance++;
             } else if (inputChar == ')')
                 bracketsBalance--;
             if (bracketsBalance < 0) {
-                printf("The opening bracket is missed on %ld position.\n", ftell(file) - 1);
+                printf("The opening bracket is missed in %d line %d position.\n", lineNumber, charPos);
                 return false;
             }
             previosChar = inputChar;
+            charPos++;
         }
 
         if (bracketsBalance != 0) {
-            printf("The closing bracket was missed on %ld position.\n", ftell(file) - 1);
+            printf("The closing bracket was missed in %d line %d position.\n", lineNumber, charPos);
             return false;
         }
         return true;
@@ -133,7 +130,7 @@ void calculateFile(char *filename) {
         fclose(output);
         free(numbers);
         free(operations);
-        puts("Results were written in output.txt file."); getch();
+        puts("Results were written in output.txt file.");
     }
-    
+    getch();
 }

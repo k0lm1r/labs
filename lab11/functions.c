@@ -33,6 +33,11 @@ bool contains(char* string, char symbol) {
     return false;
 }
 
+char* findChar(char* str, char ch) {
+    for (; *str; str++) if (*str == ch) return str;
+    return NULL;
+}
+
 int getDigit(double *digit, char *filename, int position) {
     FILE *file = fopen(filename, "r+");
     int doublePartPower = 1;
@@ -50,9 +55,4 @@ int getDigit(double *digit, char *filename, int position) {
     int pos = inputChar >= '0' && inputChar <= '9' ? ftell(file) : ftell(file) - 1;
     fclose(file);
     return pos;
-}
-
-char* findChar(char* str, char ch) {
-    for (; *str; str++) if (*str == ch) return str;
-    return NULL;
 }
